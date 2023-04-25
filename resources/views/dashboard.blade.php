@@ -10,11 +10,25 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ __("You're logged in!") }}
-                    <ul>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">name</th>
+                                <th scope="col">email</th>
+                            </tr>
+                        </thead>
+                        {{ $i = 1; }}
                         @foreach ($users as $user)
-                            <li>{{ $user->name }}</li>
+                        <tbody>
+                            <tr>
+                                <th>{{ $i++ }}</th>
+                                <th>{{ $user->name }}</th>
+                                <th>{{ $user->email }}</th>
+                            </tr>
+                        </tbody>
                         @endforeach
-                    </ul>
+                    </table>
                 </div>
             </div>
         </div>
