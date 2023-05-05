@@ -25,6 +25,9 @@ Route::get('/', function () {
     ]);
 });
 
+Route::view('/lll', 'welocome');
+Route::view('/about', 'about');
+
 
 Route::get('/dashboard', function () {
     $users = User::all();
