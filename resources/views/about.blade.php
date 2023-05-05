@@ -3,24 +3,6 @@
 @section('content')
 <section>
     <div class="container py-5">
-
-      <div class="about">
-        <div class="row">
-            <div class="col-lg-4">
-                <!-- photo -->
-                <img src="./img/IMG_8787.jpg" class="img-profile rounded-circle img-fluid mx-auto d-block" alt="...">
-
-                <h1>123</h1>
-            </div>
-            <div class="col-lg-8">
-                <h2>123
-
-                </h2>
-            </div>
-          </div>
-      </div>
-
-
       <div class="row">
         <div class="col-lg-4">
           <div class="card mb-4">

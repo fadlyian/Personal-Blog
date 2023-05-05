@@ -25,8 +25,15 @@ Route::get('/', function () {
     ]);
 });
 
-Route::view('/lll', 'welocome');
 Route::view('/about', 'about');
+
+Route::get('/blog', function(){
+    $article = Article::all();
+
+    return view('blog', [
+        'articles' => $article,
+    ]);
+});
 
 
 Route::get('/dashboard', function () {
