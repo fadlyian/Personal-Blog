@@ -57,8 +57,11 @@ Route::middleware('auth')->group(function () {
 
     Route::controller(ArticleController::class)->group(function() {
         Route::get('/article', 'index')->name('article');
-        Route::get('/article/create', 'create')->name('articleCreate');
+        Route::get('/article/create', 'create')->name('createArticle');
         Route::post('/article', 'store')->name('addArticle');
+        Route::get('/article/{id}/edit', 'edit')->name('editArticle');
+        Route::put('/article/{id}', 'update')->name('updateArticle');
+
         Route::delete('/article/{id}', 'destroy')->name('articleDestroy');
     });
 

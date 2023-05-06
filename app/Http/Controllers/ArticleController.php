@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Symfony\Component\VarDumper\VarDumper;
+use Throwable;
 
 class ArticleController extends Controller
 {
@@ -37,14 +39,16 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
         //
-        // dd('hallo');
-        // var_dump('asu');
+        try{
+            $validated = $request->validate([
+                'title' => 'required|min:3|max:255',
+                'description' => 'required',
+                'image' => 'required',
+            ]);
+        }catch (Exception $e) {
+            return $e->getMessage();
+        }
 
-        $validated = $request->validate([
-            'title' => 'required|min:3|max:255',
-            'description' => 'required',
-            'image' => 'required',
-        ]);
 
         $article = new Article();
         $article->title = $validated['title'];
@@ -61,22 +65,47 @@ class ArticleController extends Controller
     public function show(Article $article)
     {
         //
+
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Article $article)
+    public function edit($id)
     {
         //
+        $article = Article::findOrFail($id);
+
+        return view('createArticle', [
+            'article' => $article
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Article $article)
+    public function update(Request $request, $id)
     {
         //
+        try {
+            $validated = $request->validate([
+                'title' => 'required|min:3|max:255',
+                'description' => 'required',
+                'image' => 'required',
+            ]);
+
+            $article = Article::find($id);
+            $article['title'] = $validated['title'];
+            $article['text'] = $validated['description'];
+            $article['image'] = $validated['image'];
+
+            $article->save();
+
+            return redirect('/article');
+
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**

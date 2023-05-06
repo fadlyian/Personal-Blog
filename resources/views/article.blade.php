@@ -36,9 +36,11 @@
                                 <th>{{ $art->image }}</th>
                                 <th>
                                     <ul>
-                                        <button class="btn btn-warning">
-                                            <a href="" class="link-light link-underline link-underline-opacity-0">edit</a>
-                                        </button>
+                                        <form action="{{ route('editArticle', $art->id) }}" method="GET">
+                                            <button class="btn btn-warning">
+                                                Edit
+                                            </button>
+                                        </form>
                                     </ul>
                                     <ul>
                                         <form action="{{ route('articleDestroy', $art->id) }}" method="POST">

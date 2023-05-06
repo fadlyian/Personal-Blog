@@ -11,19 +11,22 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
-                    <form method="POST" action="/article" enctype="multipart/form-data">
+                    <form method="POST" action="{{ isset($article) ? route('updateArticle', $article->id) : route('addArticle') }}" enctype="multipart/form-data">
                         @csrf
+                        @if (isset($article))
+                            @method('PUT')
+                        @endif
                         <div class="form-group">
                             <label for="title">Title</label>
-                            <input type="text" class="form-control" id="title" name="title" placeholder="Enter title">
+                            <input type="text" class="form-control" id="title" name="title" value="{{ isset($article) ? $article->title : "" }}" placeholder="Enter title">
                         </div>
                         <div class="form-group">
                             <label for="description">Description</label>
-                            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                            <input type="text" class="form-control" id="description" name="description" value="{{ isset($article) ? $article->text : "" }}" placeholder="Enter Desctiption">
                         </div>
                         <div class="form-group">
                             <label for="image">Image</label>
-                            <textarea class="form-control" id="image" name="image" rows="3"></textarea>
+                            <input type="text" class="form-control" id="image" name="image" value="{{ isset($article) ? $article->image : "" }}" placeholder="Enter Image">
                         </div>
                         {{-- <div class="form-group">
                             <label for="image">Image</label>
