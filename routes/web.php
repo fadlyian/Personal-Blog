@@ -4,6 +4,7 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Article;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,7 +29,8 @@ Route::get('/', function () {
 Route::view('/about', 'about');
 
 Route::get('/blog', function(){
-    $article = Article::all();
+    $article = Article::paginate(10);
+    // $article = DB::table('articles')->paginate(10);
 
     return view('blog', [
         'articles' => $article,
