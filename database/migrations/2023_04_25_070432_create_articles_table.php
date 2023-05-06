@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            // $table->unsignedBigInteger('category_id');
-            // $table->foreignId('category_id')->constrained('categories');
             $table->text('text');
             $table->string('image');
             $table->timestamps();

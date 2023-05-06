@@ -10,7 +10,12 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
+                    {{-- {{ __("You're logged in!") }} --}}
+                    <button type="button" class="btn btn-success btn-lg" >
+                        <a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="/article/create">
+                            <span>Tambah Article</span>
+                        </a>
+                    </button>
                     <table class="table">
                         <thead>
                             <tr>
@@ -20,11 +25,11 @@
                                 <th scope="col">image</th>
                             </tr>
                         </thead>
-                        {{ $i = 1; }}
+
                         @foreach ($articles as $art)
                         <tbody>
                             <tr>
-                                <th>{{ $i++ }}</th>
+                                <th>{{ $loop->iteration }}</th>
                                 <th>{{ $art->title }}</th>
                                 <th>{{ $art->text }}</th>
                                 <th>{{ $art->image }}</th>

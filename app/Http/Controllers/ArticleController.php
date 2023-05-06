@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Symfony\Component\VarDumper\VarDumper;
 
 class ArticleController extends Controller
 {
@@ -27,6 +28,7 @@ class ArticleController extends Controller
     public function create()
     {
         //
+        return view('createArticle');
     }
 
     /**
@@ -35,6 +37,22 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
         //
+        // dd('hallo');
+        // var_dump('asu');
+
+        $validated = $request->validate([
+            'title' => 'required|min:3|max:255',
+            'description' => 'required',
+            'image' => 'required',
+        ]);
+
+        $article = new Article();
+        $article->title = $validated['title'];
+        $article->text = $validated['description'];
+        $article->image = $validated['image'];
+        $article->save();
+
+        return redirect('/article');
     }
 
     /**
