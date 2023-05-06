@@ -15,7 +15,7 @@
                 <h5 class="card-title">{{ $as->title }}</h5>
                 <p class="card-text">Deskripsi singkat mengenai card.</p>
                 <p class="card-text"><small class="text-muted">{{ $as->created_at }}</small></p>
-                <a href="#" class="btn btn-primary">Go to page</a>
+                <a href="{{ route('showArticle', $as->id ) }}" class="btn btn-primary">Go to page</a>
               </div>
             </div>
         </div>
