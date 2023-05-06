@@ -23,6 +23,7 @@
                                 <th scope="col">title</th>
                                 <th scope="col">text</th>
                                 <th scope="col">image</th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
 
@@ -33,6 +34,22 @@
                                 <th>{{ $art->title }}</th>
                                 <th>{{ $art->text }}</th>
                                 <th>{{ $art->image }}</th>
+                                <th>
+                                    <ul>
+                                        <button class="btn btn-warning">
+                                            <a href="" class="link-light link-underline link-underline-opacity-0">edit</a>
+                                        </button>
+                                    </ul>
+                                    <ul>
+                                        <form action="{{ route('articleDestroy', $art->id) }}" method="POST">
+                                            @csrf
+                                            @method('delete')
+                                            <button class="btn btn-danger">
+                                                Hapus
+                                            </button>
+                                        </form>
+                                    </ul>
+                                </th>
                             </tr>
                         </tbody>
                         @endforeach

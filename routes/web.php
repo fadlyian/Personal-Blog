@@ -58,7 +58,8 @@ Route::middleware('auth')->group(function () {
     Route::controller(ArticleController::class)->group(function() {
         Route::get('/article', 'index')->name('article');
         Route::get('/article/create', 'create')->name('articleCreate');
-        Route::post('/article', 'store');
+        Route::post('/article', 'store')->name('addArticle');
+        Route::delete('/article/{id}', 'destroy')->name('articleDestroy');
     });
 
 });
