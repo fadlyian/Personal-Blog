@@ -17,10 +17,15 @@ class ArticleFactory extends Factory
      */
     public function definition(): array
     {
+        $category = Category::inRandomOrder();
+
+
         return [
             //
             'title' => $this->faker->sentence(),
             'text' => $this->faker->text(),
+            // 'category_id' => Category::inRandomOrder()->first(),
+            'category_id' => fake()->numberBetween(1,3),
             'image' => $this->faker->imageUrl(640,480),
         ];
     }

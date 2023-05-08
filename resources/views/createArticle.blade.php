@@ -24,6 +24,19 @@
                             <label for="description">Description</label>
                             <input type="text" class="form-control" id="description" name="description" value="{{ isset($article) ? $article->text : "" }}" placeholder="Enter Desctiption">
                         </div>
+
+                        <label for="category">Category</label>
+                        <select class="form-select" aria-label="Default select example" name="category" id="category">
+                            <option selected>Select Category</option>
+                            @foreach ($categories as $cat)
+                                @if(isset($article))
+                                <option value="{{ $cat->id }}" @if ($article->category_id === $cat->id) selected @endif>{{ $cat->name }}</option>
+                                @else
+                                <option value="{{ $cat->id }}" @selected(old('category') == $cat->id)>{{ $cat->name }}</option>
+                                @endif
+
+                            @endforeach
+                          </select>
                         <div class="form-group">
                             <label for="image">Image</label>
                             <input type="text" class="form-control" id="image" name="image" value="{{ isset($article) ? $article->image : "" }}" placeholder="Enter Image">

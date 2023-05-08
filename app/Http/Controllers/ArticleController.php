@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Category;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -19,6 +20,7 @@ class ArticleController extends Controller
         //
         $articles = Article::all();
 
+
         return view('article', [
             'articles' => $articles,
         ]);
@@ -30,7 +32,11 @@ class ArticleController extends Controller
     public function create()
     {
         //
-        return view('createArticle');
+        $categories = Category::all();
+
+        return view('createArticle', [
+            'categories' => $categories,
+        ]);
     }
 
     /**
@@ -43,6 +49,7 @@ class ArticleController extends Controller
             $validated = $request->validate([
                 'title' => 'required|min:3|max:255',
                 'description' => 'required',
+                'category' => 'required',
                 'image' => 'required',
             ]);
         }catch (Exception $e) {
@@ -53,6 +60,7 @@ class ArticleController extends Controller
         $article = new Article();
         $article->title = $validated['title'];
         $article->text = $validated['description'];
+        $article['category_id'] = $validated['category'];
         $article->image = $validated['image'];
         $article->save();
 
@@ -79,9 +87,11 @@ class ArticleController extends Controller
     {
         //
         $article = Article::findOrFail($id);
+        $categories = Category::all();
 
         return view('createArticle', [
-            'article' => $article
+            'article' => $article,
+            'categories' => $categories,
         ]);
     }
 
@@ -95,12 +105,14 @@ class ArticleController extends Controller
             $validated = $request->validate([
                 'title' => 'required|min:3|max:255',
                 'description' => 'required',
+                'category' => 'required',
                 'image' => 'required',
             ]);
 
             $article = Article::find($id);
             $article['title'] = $validated['title'];
             $article['text'] = $validated['description'];
+            $article['category_id'] = $validated['category'];
             $article['image'] = $validated['image'];
 
             $article->save();

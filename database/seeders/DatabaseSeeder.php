@@ -26,6 +26,23 @@ class DatabaseSeeder extends Seeder
             'email' => 'ianfadly24@gmail.com',
             'password' => Hash::make('password'),
         ]);
+
+        DB::table('categories')->insert([
+            'name' => 'Coding',
+            'created_at' => fake()->date(),
+            'updated_at' => fake()->date(),
+        ]);
+        DB::table('categories')->insert([
+            'name' => 'Study',
+            'created_at' => fake()->date(),
+            'updated_at' => fake()->date(),
+        ]);
+        DB::table('categories')->insert([
+            'name' => 'English',
+            'created_at' => fake()->date(),
+            'updated_at' => fake()->date(),
+        ]);
+
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',

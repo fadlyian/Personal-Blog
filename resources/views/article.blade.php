@@ -22,17 +22,19 @@
                                 <th scope="col">No</th>
                                 <th scope="col">title</th>
                                 <th scope="col">text</th>
+                                <th scope="col">category</th>
                                 <th scope="col">image</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
 
-                        @foreach ($articles as $art)
+                        @foreach ($articles->reverse() as $art)
                         <tbody>
                             <tr>
                                 <th>{{ $loop->iteration }}</th>
                                 <th>{{ $art->title }}</th>
                                 <th>{{ $art->text }}</th>
+                                <th>{{ $art->category->name }}</th>
                                 <th>{{ $art->image }}</th>
                                 <th>
                                     <ul>
