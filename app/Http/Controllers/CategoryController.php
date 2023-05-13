@@ -13,6 +13,11 @@ class CategoryController extends Controller
     public function index()
     {
         //
+        $category = Category::all();
+
+        return view('category', [
+            'category' => $category,
+        ]);
     }
 
     /**
@@ -21,6 +26,7 @@ class CategoryController extends Controller
     public function create()
     {
         //
+        return view('createCategory');
     }
 
     /**
@@ -29,6 +35,14 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'name' => 'required|unique:categories',
+        ]);
+
+        // dd('berhasil');
+        $category = Category::create($request->all());
+
+        return redirect('category');
     }
 
     /**
@@ -37,29 +51,50 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         //
+        // $category = Category::find($category);
+        // return view('createCategory', []);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $category)
+    public function edit($id)
     {
         //
+        $category = Category::find($id);
+
+        return view('createCategory', [
+            'category' => $category,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'name' => 'required|unique:categories',
+        ]);
+
+        $category = Category::find($id);
+
+        $category->name = $request['name'];
+        $category->save();
+
+        return redirect('category');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
         //
+        $category = Category::find($id);
+        $category->delete();
+
+        return redirect('/category');
     }
 }

@@ -21,6 +21,11 @@
                         {{ __('Article') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('category')" :active="request()->routeIs('category')" class="link-underline link-underline-opacity-0">
+                        {{ __('Category') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->

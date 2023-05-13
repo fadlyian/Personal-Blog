@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Article;
 use App\Models\User;
@@ -51,10 +52,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Route::resource('article', ArticleController::class);
-    // Route::get('/article', [ArticleController::class, 'index'])->name('article');
-    // Route::get('/article/create', [ArticleController::class, 'create'])->name('articleCreate');
-
     Route::controller(ArticleController::class)->group(function() {
         Route::get('/article', 'index')->name('article');
         Route::get('/article/create', 'create')->name('createArticle');
@@ -62,8 +59,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/article/{id}', 'show')->name('showArticle');
         Route::get('/article/{id}/edit', 'edit')->name('editArticle');
         Route::put('/article/{id}', 'update')->name('updateArticle');
-
         Route::delete('/article/{id}', 'destroy')->name('articleDestroy');
+    });
+
+    Route::controller(CategoryController::class)->group(function() {
+        Route::get('/category', 'index')->name('category');
+        Route::get('/category/create', 'create')->name('createCategory');
+        Route::post('/category', 'store')->name('addCategory');
+        Route::get('/category/{id}', 'show')->name('showCategory');
+        Route::get('/category/{id}/edit', 'edit')->name('editCategory');
+        Route::put('/category/{id}', 'update')->name('updateCategory');
+        Route::delete('/category/{id}', 'destroy')->name('destroyCategory');
     });
 
 });
