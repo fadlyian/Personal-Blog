@@ -17,15 +17,6 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-        \App\Models\User::factory(10)->create();
-        \App\Models\Article::factory(20)->create();
-
-
-        DB::table('users')->insert([
-            'name' => 'ian',
-            'email' => 'ianfadly24@gmail.com',
-            'password' => Hash::make('password'),
-        ]);
 
         DB::table('categories')->insert([
             'name' => 'Coding',
@@ -42,6 +33,17 @@ class DatabaseSeeder extends Seeder
             'created_at' => fake()->date(),
             'updated_at' => fake()->date(),
         ]);
+
+        \App\Models\Article::factory(20)->create();
+
+
+        DB::table('users')->insert([
+            'name' => 'ian',
+            'email' => 'ianfadly24@gmail.com',
+            'password' => Hash::make('password'),
+        ]);
+
+
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
