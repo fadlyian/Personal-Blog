@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArticleApiController;
+use App\Http\Controllers\AuthenticationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,5 +24,17 @@ Route::get('post', function(){
     echo "halo deckk! <3";
 });
 
-Route::get('/posts', [ArticleApiController::class, 'index']);
-Route::get('/post/{id}', [ArticleApiController::class, 'show']);
+Route::middleware(['auth:sanctum'])->group(function(){
+    Route::get('/logout', [AuthenticationController::class, 'logout']);
+    Route::get('/me', [AuthenticationController::class, 'me']);
+
+    Route::post('/posts',[ArticleApiController::class, 'store']);
+
+});
+
+Route::get('/posts', [ArticleApiController::class, 'index'])->middleware(['auth:sanctum']);
+Route::get('/posts/{id}', [ArticleApiController::class, 'show'])->middleware(['auth:sanctum']);
+
+Route::post('/login1', [AuthenticationController::class, 'login']);
+
+

@@ -9,7 +9,7 @@ class Article extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'image', 'category_id'];
+    protected $fillable = ['title', 'text', 'image', 'category_id'];
 
     public function category()
     {
