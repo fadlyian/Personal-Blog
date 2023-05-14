@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TagController;
 use App\Models\Article;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -70,6 +71,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/category/{id}/edit', 'edit')->name('editCategory');
         Route::put('/category/{id}', 'update')->name('updateCategory');
         Route::delete('/category/{id}', 'destroy')->name('destroyCategory');
+    });
+
+    Route::controller(TagController::class)->group(function() {
+        Route::get('/tag', 'index')->name('tag');
+        Route::get('/tag/create', 'create')->name('createTag');
+        Route::post('/tag', 'store')->name('addTag');
+        Route::get('/tag/{id}', 'show')->name('showTag');
+        Route::get('/tag/{id}/edit', 'edit')->name('editTag');
+        Route::put('/tag/{id}', 'update')->name('updateTag');
+        Route::delete('/tag/{id}', 'destroy')->name('destroyTag');
     });
 
 });
