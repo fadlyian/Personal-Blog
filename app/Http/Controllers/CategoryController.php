@@ -15,7 +15,7 @@ class CategoryController extends Controller
         //
         $category = Category::all();
 
-        return view('category', [
+        return view('pages.category.index', [
             'category' => $category,
         ]);
     }
@@ -26,7 +26,7 @@ class CategoryController extends Controller
     public function create()
     {
         //
-        return view('createCategory');
+        return view('pages.category.create');
     }
 
     /**
@@ -42,7 +42,7 @@ class CategoryController extends Controller
         // dd('berhasil');
         $category = Category::create($request->all());
 
-        return redirect('category');
+        return redirect()->route('category.index')->with(['success' => 'Create Success']);
     }
 
     /**
@@ -63,7 +63,7 @@ class CategoryController extends Controller
         //
         $category = Category::find($id);
 
-        return view('createCategory', [
+        return view('pages.category.edit', [
             'category' => $category,
         ]);
     }
@@ -80,10 +80,9 @@ class CategoryController extends Controller
 
         $category = Category::find($id);
 
-        $category->name = $request['name'];
-        $category->save();
+        $category->update($request->all());
 
-        return redirect('category');
+        return redirect()->route('category.index')->with(['success' => 'Updated Success']);
     }
 
     /**
@@ -95,6 +94,6 @@ class CategoryController extends Controller
         $category = Category::find($id);
         $category->delete();
 
-        return redirect('/category');
+        return redirect('/category')->with(['success' => 'Delete Success']);
     }
 }

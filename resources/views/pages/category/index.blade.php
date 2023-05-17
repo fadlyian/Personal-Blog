@@ -12,10 +12,15 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{-- {{ __("You're logged in!") }} --}}
                     <button type="button" class="btn btn-success btn-lg" >
-                        <a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{{ route('createCategory') }}">
+                        <a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{{ route('category.create') }}">
                             <span>Tambah Category</span>
                         </a>
                     </button>
+                    @if (session('success'))
+                        <div class="alert alert-success my-1" role="alert">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                     <table class="table">
                         <thead>
                             <tr>
@@ -32,14 +37,14 @@
                                 <th>{{ $cate->name }}</th>
                                 <th>
                                     <ul>
-                                        <form action="{{ route('editCategory', $cate->id) }}" method="GET">
+                                        <form action="{{ route('category.edit', $cate->id) }}" method="GET">
                                             <button class="btn btn-warning">
                                                 Edit
                                             </button>
                                         </form>
                                     </ul>
                                     <ul>
-                                        <form action="{{ route('destroyCategory', $cate->id) }}" method="POST">
+                                        <form action="{{ route('category.destroy', $cate->id) }}" method="POST">
                                             @csrf
                                             @method('delete')
                                             <button class="btn btn-danger">
