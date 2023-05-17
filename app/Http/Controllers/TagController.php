@@ -15,7 +15,7 @@ class TagController extends Controller
         //
         $tag = Tag::all();
 
-        return view('tag', [
+        return view('pages.tag.index', [
             'tags' => $tag,
         ]);
     }
@@ -26,7 +26,7 @@ class TagController extends Controller
     public function create()
     {
         //
-        return view('createTag');
+        return view('pages.tag.create');
     }
 
     /**
@@ -41,7 +41,7 @@ class TagController extends Controller
 
         $tag = Tag::create($request->all());
 
-        return redirect('tag');
+        return redirect()->route('tag.index')->with(['success' => 'Created Success']);
     }
 
     /**
@@ -60,7 +60,7 @@ class TagController extends Controller
         //
         $tag = Tag::find($id);
 
-        return view('createTag', [
+        return view('pages.tag.edit', [
             'tag' => $tag,
         ]);
     }
@@ -75,16 +75,12 @@ class TagController extends Controller
             'name' => 'required|unique:tags',
         ]);
 
-        // $tag = Tag::find($id);
-        // $tag->update($request);
-
-        // return redirect('tag');
 
         Tag::where('id', $id)->update([
             'name' => $request->name,
         ]);
 
-        return redirect('tag');
+        return redirect()->route('tag.index')->with(['success' => 'Update Success']);
     }
 
     /**
@@ -96,6 +92,6 @@ class TagController extends Controller
         $tag = Tag::find($id);
         $tag->delete();
 
-        return redirect('tag');
+        return redirect()->route('tag.index')->with(['success' => 'Delete Success']);
     }
 }

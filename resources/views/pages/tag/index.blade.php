@@ -12,10 +12,15 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{-- {{ __("You're logged in!") }} --}}
                     <button type="button" class="btn btn-success btn-lg" >
-                        <a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{{ route('createTag') }}">
+                        <a class="link-light link-offset-2 link-underline link-underline-opacity-0" href="{{ route('tag.create') }}">
                             <span>Tambah Tag</span>
                         </a>
                     </button>
+                    @if (session('success'))
+                        <div class="alert alert-success my-1" role="alert">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                     <table class="table">
                         <thead>
                             <tr>
@@ -32,14 +37,14 @@
                                 <th>{{ $tag->name }}</th>
                                 <th>
                                     <ul>
-                                        <form action="{{ route('editTag', $tag->id) }}" method="GET">
+                                        <form action="{{ route('tag.edit', $tag->id) }}" method="GET">
                                             <button class="btn btn-warning">
                                                 Edit
                                             </button>
                                         </form>
                                     </ul>
                                     <ul>
-                                        <form action="{{ route('destroyTag', $tag->id) }}" method="POST">
+                                        <form action="{{ route('tag.destroy', $tag->id) }}" method="POST">
                                             @csrf
                                             @method('delete')
                                             <button class="btn btn-danger">

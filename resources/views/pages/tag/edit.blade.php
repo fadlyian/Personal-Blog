@@ -11,14 +11,12 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
-                    <form method="POST" action="{{ isset($tag) ? route('updateTag', $tag->id) : route('addTag') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('tag.update', $tag->id) }}" enctype="multipart/form-data">
                         @csrf
-                        @if (isset($tag))
-                            @method('PUT')
-                        @endif
+                        @method('PUT')
                         <div class="form-group">
                             <label for="name">Name Tag</label>
-                            <input type="text" class="form-control" id="name" name="name" value="{{ isset($tag) ? $tag->name : "" }}" placeholder="Enter name">
+                            <input type="text" class="form-control" id="name" name="name" value="{{ $tag->name }}" placeholder="Enter name">
                         </div>
 
                         <button type="submit" class="mt-4 btn btn-primary">Submit</button>
