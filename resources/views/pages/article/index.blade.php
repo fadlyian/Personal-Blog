@@ -16,6 +16,12 @@
                             <span>Tambah Article</span>
                         </a>
                     </button>
+                    @if (session('success'))
+                    <div class="alert alert-success my-1" role="alert">
+                        {{ session('success') }}
+                    </div>
+                    @endif
+
                     <table class="table">
                         <thead>
                             <tr>
@@ -23,6 +29,7 @@
                                 <th scope="col">title</th>
                                 <th scope="col">text</th>
                                 <th scope="col">category</th>
+                                <th scope="col">tag</th>
                                 <th scope="col">image</th>
                                 <th scope="col"></th>
                             </tr>
@@ -35,17 +42,24 @@
                                 <th>{{ $art->title }}</th>
                                 <th>{{ $art->text }}</th>
                                 <th>{{ $art->category->name }}</th>
+                                <th>
+                                    <ul class="list-group">
+                                    @foreach ($art->tags as $tag )
+                                        <li class="badge bg-primary rounded-pill my-1">{{ $tag->name }}</li>
+                                    @endforeach
+                                    </ul>
+                                </th>
                                 <th>{{ $art->image }}</th>
                                 <th>
                                     <ul>
-                                        <form action="{{ route('editArticle', $art->id) }}" method="GET">
+                                        <form action="{{ route('article.edit', $art->id) }}" method="GET">
                                             <button class="btn btn-warning">
                                                 Edit
                                             </button>
                                         </form>
                                     </ul>
                                     <ul>
-                                        <form action="{{ route('articleDestroy', $art->id) }}" method="POST">
+                                        <form action="{{ route('article.destroy', $art->id) }}" method="POST">
                                             @csrf
                                             @method('delete')
                                             <button class="btn btn-danger">

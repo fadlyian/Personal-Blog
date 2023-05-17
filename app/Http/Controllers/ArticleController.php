@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreArticleRequest;
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\Tag;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Traits\HasImageUpload;
+use Illuminate\Contracts\Cache\Store;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\VarDumper\VarDumper;
 use Throwable;
 
@@ -21,7 +27,7 @@ class ArticleController extends Controller
         $articles = Article::all();
 
 
-        return view('article', [
+        return view('pages.article.index', [
             'articles' => $articles,
         ]);
     }
@@ -33,9 +39,11 @@ class ArticleController extends Controller
     {
         //
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('createArticle', [
+        return view('pages.article.create', [
             'categories' => $categories,
+            'tags' => $tags,
         ]);
     }
 
@@ -46,25 +54,26 @@ class ArticleController extends Controller
     {
         //
         try{
-            $validated = $request->validate([
-                'title' => 'required|min:3|max:255',
-                'description' => 'required',
-                'category' => 'required',
-                'image' => 'required',
+            $validated = Validator::make($request->all(),[
+                'title' => 'required|unique',
+                'text' => 'required',
+                'category_id' => 'required',
+                'image' => 'nullable|max:512'
             ]);
+
+            // $validated['image'] = $this->uploadImage($request->file('image'));
+            $article = Article::create($request->all());
+
+            if($request->tag_ids)
+            {
+                $article->tags()->attach($request->tag_ids);
+            }
+
+            return redirect()->route('article.index')->with(['success' => 'Create success']);
         }catch (Exception $e) {
             return $e->getMessage();
         }
 
-
-        $article = new Article();
-        $article->title = $validated['title'];
-        $article->text = $validated['description'];
-        $article['category_id'] = $validated['category'];
-        $article->image = $validated['image'];
-        $article->save();
-
-        return redirect('/article');
     }
 
     /**
@@ -75,7 +84,7 @@ class ArticleController extends Controller
         //
         $article = Article::find($id);
 
-        return view('detailBlog', [
+        return view('pages.article.show', [
             'article'=> $article,
         ]);
     }
@@ -88,10 +97,12 @@ class ArticleController extends Controller
         //
         $article = Article::findOrFail($id);
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('createArticle', [
+        return view('pages.article.edit', [
             'article' => $article,
             'categories' => $categories,
+            'tags' => $tags,
         ]);
     }
 
@@ -102,22 +113,21 @@ class ArticleController extends Controller
     {
         //
         try {
-            $validated = $request->validate([
-                'title' => 'required|min:3|max:255',
-                'description' => 'required',
-                'category' => 'required',
-                'image' => 'required',
+            $validated = Validator::make($request->all(), [
+                'title' => 'required',
+                'text' => 'required',
+                'category_id' => 'required',
             ]);
 
             $article = Article::find($id);
-            $article['title'] = $validated['title'];
-            $article['text'] = $validated['description'];
-            $article['category_id'] = $validated['category'];
-            $article['image'] = $validated['image'];
+            if($request->tag_ids)
+            {
+                $article->tags()->detach();
+                $article->tags()->attach($request->tag_ids);
+            }
+            $article->update($request->all());
 
-            $article->save();
-
-            return redirect('/article');
+            return redirect()->route('article.index')->with(['success' => 'Update success']);
 
         } catch (Exception $e) {
             return $e->getMessage();
@@ -129,11 +139,11 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        //
-        // dd($article);
+
         $article = Article::find($id);
+        $article->tags()->detach();
         $article->delete();
 
-        return redirect('/article');
+        return redirect()->route('article.index')->with(['success' => 'Delete success']);
     }
 }

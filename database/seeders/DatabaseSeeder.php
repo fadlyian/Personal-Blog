@@ -43,7 +43,16 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
         ]);
 
-
+        DB::table('tags')->insert([
+            'name' => 'tutorial',
+            'created_at' => fake()->date(),
+            'updated_at' => fake()->date(),
+        ]);
+        DB::table('tags')->insert([
+            'name' => 'learning',
+            'created_at' => fake()->date(),
+            'updated_at' => fake()->date(),
+        ]);
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

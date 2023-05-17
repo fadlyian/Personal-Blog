@@ -26,9 +26,12 @@
         </div>
     </div>
 </div>
-
+<hr>
 {{-- card --}}
 <div class="container">
+    <div class="row text-center">
+        <h2>Blog Recently</h2>
+    </div>
     <div class="row">
 
         @foreach ($articles as $as)
@@ -38,7 +41,7 @@
                 <h5 class="card-title">{{ $as->title }}</h5>
                 <p class="card-text">Deskripsi singkat mengenai card.</p>
                 <p class="card-text"><small class="text-muted">{{ $as->created_ats }}</small></p>
-                <a href="#" class="btn btn-primary">Go to page</a>
+                <a href="{{ route('article.show', $as->id) }}" class="btn btn-primary">Go to page</a>
               </div>
             </div>
         </div>
