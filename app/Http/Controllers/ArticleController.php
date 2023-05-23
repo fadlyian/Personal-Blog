@@ -7,6 +7,8 @@ use App\Models\Category;
 use App\Models\Tag;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -24,6 +26,18 @@ class ArticleController extends Controller
         return view('pages.article.index', [
             'articles' => $articles,
         ]);
+    }
+
+    // download CV
+    public function downloadCV(){
+        //PDF file is stored under project/public/download/info.pdf
+        $file= public_path(). "/storage/download/FadlySofyansyah-resume.pdf";
+
+        $headers = array(
+                'Content-Type: application/pdf',
+                );
+
+        return Response::download($file, 'CV_ian.pdf', $headers);
     }
 
     /**
@@ -133,11 +147,20 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
+        try {
+            $article = Article::find($id);
+            $image_path = $article->image;
 
-        $article = Article::find($id);
-        $article->tags()->detach();
-        $article->delete();
+            if(isset($image_path)){
+                Storage::delete($image_path);
+            }
+            $article->tags()->detach();
+            $article->delete();
 
-        return redirect()->route('article.index')->with(['success' => 'Delete success']);
+            return redirect()->route('article.index')->with(['success' => 'Delete success']);
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+
     }
 }

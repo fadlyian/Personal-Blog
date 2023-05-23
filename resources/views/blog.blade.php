@@ -21,7 +21,7 @@
                 <h5 class="card-title">{{ $as->title }}</h5>
                 <div class="text-sm p-1 text-body-secondary">{{$as->created_at->diffForHumans()}}</div>
                 <a href="{{ route('article.show', $as->id) }}">
-                    <button class="btn btn-primary" type="button">Button</button>
+                    <button class="btn btn-primary" type="button">Read more</button>
                 </a>
               </div>
             </div>

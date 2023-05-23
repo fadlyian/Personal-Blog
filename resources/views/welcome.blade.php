@@ -16,7 +16,9 @@
             <p class="my-5">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consectetur odio repellendus, iste aliquid sint ullam cumque vero, iusto rem deleniti est optio nihil, vitae numquam ipsam maxime saepe consequuntur libero.</p>
 
             <div class="text-center">
-                <button type="button" class="btn btn-primary">Download CV</button>
+                <a href="/download">
+                    <button type="button" class="btn btn-primary">Download CV</button>
+                </a>
             </div>
         </div>
     </div>
@@ -43,7 +45,7 @@
                     <small>{{$as->created_at->diffForHumans()}}</small>
                 </div>
                 <a href="{{ route('article.show', $as->id) }}">
-                    <button class="btn btn-primary" type="button">Baca Blog</button>
+                    <button class="btn btn-primary" type="button">Read more</button>
                 </a>
               </div>
             </div>
