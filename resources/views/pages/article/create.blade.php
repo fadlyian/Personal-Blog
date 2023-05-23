@@ -53,7 +53,7 @@
                             <label for="text">Text</label>
                             <textarea name="text" class="my-2 w-full border-gray-300 rounded px-3 py-2 outline-none" cols="30" rows="5"> {{ old('text') }}</textarea>
                             @error('text') <div class="my-1 text-red-500">{{ $message }}</div> @enderror
-                            </div>
+                        </div>
 
                         <button type="submit" class="mt-4 btn btn-primary">Submit</button>
                     </form>

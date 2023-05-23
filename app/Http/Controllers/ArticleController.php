@@ -2,19 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreArticleRequest;
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\Tag;
-use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Traits\HasImageUpload;
-use Illuminate\Contracts\Cache\Store;
-use Illuminate\Support\Facades\Storage;
-use Symfony\Component\VarDumper\VarDumper;
-use Throwable;
+
 
 class ArticleController extends Controller
 {
@@ -54,15 +48,18 @@ class ArticleController extends Controller
     {
         //
         try{
-            $validated = Validator::make($request->all(),[
-                'title' => 'required|unique',
+            $validated = $request->validate([
+                'title' => 'required',
                 'text' => 'required',
                 'category_id' => 'required',
-                'image' => 'nullable|max:512'
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
             ]);
 
-            // $validated['image'] = $this->uploadImage($request->file('image'));
-            $article = Article::create($request->all());
+            if($request->file('image')){
+                $validated['image'] = $request->file('image')->store('article-images');
+            }
+
+            $article = Article::create($validated);
 
             if($request->tag_ids)
             {
@@ -79,11 +76,8 @@ class ArticleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Article $article)
     {
-        //
-        $article = Article::find($id);
-
         return view('pages.article.show', [
             'article'=> $article,
         ]);

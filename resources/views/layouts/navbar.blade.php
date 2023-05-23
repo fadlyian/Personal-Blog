@@ -10,9 +10,9 @@
           </a>
 
           <ul class="nav nav-pills align-items-center">
-            <li class="nav-item"><a href="/" class="nav-link active" aria-current="page">Home</a></li>
-            <li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
-            <li class="nav-item"><a href="/about" class="nav-link">About Me</a></li>
+            <li class="nav-item"><a href="/" class="nav-link {{ Request::is('/') ? 'active' : '' }}" aria-current="page">Home</a></li>
+            <li class="nav-item"><a href="/blog" class="nav-link {{ Request::is('blog') ? 'active' : '' }}">Blog</a></li>
+            <li class="nav-item"><a href="/about" class="nav-link {{ Request::is('about') ? 'active' : '' }}">About Me</a></li>
           </ul>
 
         </header>

@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
             'updated_at' => fake()->date(),
         ]);
 
-        \App\Models\Article::factory(20)->create();
+        // \App\Models\Article::factory(20)->create();
 
 
         DB::table('users')->insert([

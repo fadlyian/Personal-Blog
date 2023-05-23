@@ -24,7 +24,7 @@ Route::get('/', function () {
     $article = Article::all();
 
     return view('welcome', [
-        'articles' => $article,
+        'articles' => $article->reverse(),
     ]);
 });
 
@@ -59,7 +59,7 @@ Route::middleware('auth')->group(function () {
     ]);
 });
 
-Route::get('/article/{{id}}', [ArticleController::class, 'show'])->name('article.show');
+Route::get('/article/{article}', [ArticleController::class, 'show'])->name('article.show');
     // Route::controller(ArticleController::class)->group(function() {
     //     Route::get('/article', 'index')->name('article');
     //     Route::get('/article/create', 'create')->name('createArticle');

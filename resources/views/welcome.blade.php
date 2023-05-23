@@ -1,12 +1,7 @@
-{{-- <x-main-layout>
-
-    <x-slot:title>
-        Home
-    </x-slot>
-
-</x-main-layout> --}}
-
 @extends('layouts.main')
+
+@section('title', 'Welcome')
+
 
 @section('content')
 <div class="container my-5">
@@ -29,30 +24,35 @@
 <hr>
 {{-- card --}}
 <div class="container">
-    <div class="row text-center">
+    <div class="row text-center mb-3">
         <h2>Blog Recently</h2>
     </div>
-    <div class="row">
 
+    <div class="row row-cols-1 row-cols-md-2 g-4">
         @foreach ($articles as $as)
-        <div class="col col-sm-6 mx-auto p-3">
+        <div class="col col-lg-6 mx-auto">
             <div class="card">
-              <div class="card-body text-center">
+                @if ($as->image)
+                    <img style="height: 200px; object-fit: cover" src="{{ asset('storage/'. $as->image) }}" class="card-img-top" alt="{{ $as->category->name }}">
+                @else
+                    <img style="height: 200px; object-fit: cover" src="http://source.unsplash.com/500x400?{{ $as->category->name }}" class="card-img-top" alt="{{ $as->category->name }}">
+                @endif
+              <div class="card-body">
                 <h5 class="card-title">{{ $as->title }}</h5>
-                <p class="card-text">Deskripsi singkat mengenai card.</p>
-                <p class="card-text"><small class="text-muted">{{ $as->created_ats }}</small></p>
-                <a href="{{ route('article.show', $as->id) }}" class="btn btn-primary">Go to page</a>
+                <div class="text-sm p-1 text-body-secondary">
+                    <small>{{$as->created_at->diffForHumans()}}</small>
+                </div>
+                <a href="{{ route('article.show', $as->id) }}">
+                    <button class="btn btn-primary" type="button">Baca Blog</button>
+                </a>
               </div>
             </div>
-        </div>
-
-        @if ($as->id == 5)
-            @break
-        @endif
+          </div>
         @endforeach
 
     </div>
 </div>
 {{-- end card --}}
+
 
 @endsection

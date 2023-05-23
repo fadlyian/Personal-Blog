@@ -27,7 +27,6 @@
                             <tr>
                                 <th scope="col">No</th>
                                 <th scope="col">title</th>
-                                <th scope="col">text</th>
                                 <th scope="col">category</th>
                                 <th scope="col">tag</th>
                                 <th scope="col">image</th>
@@ -40,7 +39,6 @@
                             <tr>
                                 <th>{{ $loop->iteration }}</th>
                                 <th>{{ $art->title }}</th>
-                                <th>{{ $art->text }}</th>
                                 <th>{{ $art->category->name }}</th>
                                 <th>
                                     <ul class="list-group">
