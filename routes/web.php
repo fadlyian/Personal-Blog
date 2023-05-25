@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TagController;
 use App\Models\Article;
 use App\Models\User;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -62,5 +63,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/article/{article}', [ArticleController::class, 'show'])->name('article.show');
+
+Route::get('/foo', function () {
+    Artisan::call('storage:link');
+});
 
 require __DIR__.'/auth.php';
